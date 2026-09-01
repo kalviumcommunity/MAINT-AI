@@ -1,70 +1,60 @@
 import streamlit as st
+from utils.helpers import render_html
 
 
 def render_sidebar():
 
     with st.sidebar:
 
-        st.title("⚙ MaintAI")
+        render_html("""
+<div class="sidebar-brand">
+    <div class="brand-icon">⚙</div>
+    <div>
+        <div class="brand-name">MaintAI</div>
+        <div class="brand-subtitle">ENTERPRISE AI</div>
+    </div>
+</div>
+<div class="sidebar-divider"></div>
+""")
 
-        st.caption("AI-POWERED MAINTENANCE")
+        current_page = st.session_state.get("page", "dashboard")
 
-        st.divider()
+        nav_items = [
+            ("dashboard", "▦", "Dashboard"),
+            ("new_query", "◈", "New Query"),
+            ("history", "↻", "History"),
+            ("documents", "▤", "Documents"),
+        ]
 
-        st.caption("WORKSPACE")
+        for page_key, icon, label in nav_items:
+            is_active = "active-nav" if current_page == page_key else ""
+            render_html(f'<div class="nav-wrapper {is_active}">')
+            if st.button(f"{icon}  {label}", key=f"sidebar_{page_key}", use_container_width=True):
+                st.session_state["page"] = page_key
+                st.rerun()
+            render_html("</div>")
 
-        if st.button(
-            "▦  Dashboard",
-            key="nav_dashboard",
-            use_container_width=True
-        ):
-            st.session_state["page"] = "dashboard"
-            st.rerun()
+        render_html("""
+<div class="sidebar-section-title system-title">SYSTEM</div>
+""")
 
-        if st.button(
-            "＋  New Query",
-            key="nav_new_query",
-            use_container_width=True
-        ):
-            st.session_state["page"] = "new_query"
-            st.rerun()
+        system_items = [
+            ("feedback", "◉", "Feedback"),
+            ("settings", "⚙", "Settings"),
+        ]
 
-        if st.button(
-            "↻  History",
-            key="nav_history",
-            use_container_width=True
-        ):
-            st.session_state["page"] = "history"
-            st.rerun()
+        for page_key, icon, label in system_items:
+            is_active = "active-nav" if current_page == page_key else ""
+            render_html(f'<div class="nav-wrapper {is_active}">')
+            if st.button(f"{icon}  {label}", key=f"sidebar_{page_key}", use_container_width=True):
+                st.session_state["page"] = page_key
+                st.rerun()
+            render_html("</div>")
 
-        if st.button(
-            "▤  Documents",
-            key="nav_documents",
-            use_container_width=True
-        ):
-            st.session_state["page"] = "documents"
-            st.rerun()
-
-        st.write("")
-
-        st.caption("SYSTEM")
-
-        if st.button(
-            "◉  Feedback",
-            key="nav_feedback",
-            use_container_width=True
-        ):
-            st.session_state["page"] = "feedback"
-            st.rerun()
-
-        if st.button(
-            "⚙  Settings",
-            key="nav_settings",
-            use_container_width=True
-        ):
-            st.session_state["page"] = "settings"
-            st.rerun()
-
-        st.divider()
-
-        st.success("System Online")
+        render_html("""
+<div class="sidebar-spacer"></div>
+<div class="system-status">
+    <span class="status-dot"></span>
+    System Online
+</div>
+""")
