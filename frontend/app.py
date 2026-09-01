@@ -2,6 +2,7 @@ import streamlit as st
 from pathlib import Path
 
 from pages.dashboard import dashboard
+from pages.new_query import new_query
 
 
 st.set_page_config(
@@ -19,7 +20,12 @@ with open(css_path, "r", encoding="utf-8") as f:
 if "page" not in st.session_state:
     st.session_state["page"] = "dashboard"
 
-# For today, only the dashboard is wired up.
-# Sidebar buttons for other pages will update session_state,
-# but won't navigate anywhere yet until those pages are fixed.
-dashboard()
+page = st.session_state["page"]
+
+# Dashboard and New Query are fully wired.
+# Other sidebar items will highlight as active but show no
+# content yet until those pages are built.
+if page == "new_query":
+    new_query()
+else:
+    dashboard()

@@ -10,7 +10,7 @@ from utils.helpers import render_html
 def dashboard():
 
     render_sidebar()
-    render_header()
+    render_header("Dashboard")
 
     render_html("""
 <div class="hero-section">
