@@ -1,66 +1,26 @@
-from sqlalchemy import (
-    Column,
-    Integer,
-    Boolean,
-    Text,
-    DateTime,
-    ForeignKey,
-)
+from sqlalchemy import Column, Integer, Text, DateTime, ForeignKey, CheckConstraint
 from sqlalchemy.sql import func
-from sqlalchemy.orm import relationship
 
-from app.database import Base
+from backend.utils.database import Base
 
 
 class Feedback(Base):
     __tablename__ = "feedback"
 
-    feedback_id = Column(
-        Integer,
-        primary_key=True,
-        index=True,
-    )
-
-    # Query for which feedback was given
+    feedback_id = Column(Integer, primary_key=True, index=True)
     query_id = Column(
         Integer,
-        ForeignKey("queries.query_id"),
-        nullable=False,
+        ForeignKey("queries.query_id", ondelete="CASCADE"),
+        nullable=False
     )
-
-    # User who submitted the feedback
     user_id = Column(
         Integer,
-        ForeignKey("users.user_id"),
-        nullable=False,
+        ForeignKey("users.user_id", ondelete="SET NULL")
     )
+    rating = Column(Integer)
+    comments = Column(Text)
+    created_at = Column(DateTime, server_default=func.current_timestamp())
 
-    # True = Helpful, False = Not Helpful
-    is_helpful = Column(
-        Boolean,
-        nullable=False,
-    )
-
-    # Optional feedback comment
-    comment = Column(
-        Text,
-        nullable=True,
-    )
-
-    # Feedback timestamp
-    created_at = Column(
-        DateTime(timezone=True),
-        server_default=func.now(),
-        nullable=False,
-    )
-
-    # Relationships
-    query = relationship(
-        "Query",
-        back_populates="feedback",
-    )
-
-    user = relationship(
-        "User",
-        back_populates="feedback",
+    __table_args__ = (
+        CheckConstraint("rating >= 1 AND rating <= 5", name="rating_range"),
     )
