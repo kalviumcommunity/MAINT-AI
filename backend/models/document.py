@@ -1,10 +1,9 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
 from sqlalchemy.sql import func
 
-from backend.utils.database import Base
+from utils.database import db
 
-
-class Document(Base):
+class Document(db.Model):
     __tablename__ = "documents"
 
     document_id = Column(Integer, primary_key=True, index=True)

@@ -1,10 +1,9 @@
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.sql import func
 
-from backend.utils.database import Base
+from utils.database import db
 
-
-class User(Base):
+class User(db.Model):
     __tablename__ = "users"
 
     user_id = Column(Integer, primary_key=True, index=True)
