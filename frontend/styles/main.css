@@ -795,6 +795,31 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
     font-style: italic;
 }
 
+.ai-response-sources {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid #dbe6fb;
+}
+
+.ai-response-sources-label {
+    color: #7285ab;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    margin-right: 8px;
+}
+
+.source-tag {
+    display: inline-block;
+    background: #e3ebfb;
+    color: #2450a8;
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 10px;
+    font-weight: 650;
+    margin: 3px 4px 0 0;
+}
+
 
 /* =========================================================
    TIPS / SIDE PANELS
@@ -842,6 +867,408 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
     color: #929dac;
     font-size: 10px;
     margin-top: 3px;
+}
+
+
+/* =========================================================
+   RESULTS PAGE
+========================================================= */
+
+.crumb-root {
+    color: #8a95a6;
+}
+
+.crumb-link {
+    color: #2463eb;
+}
+
+.crumb-current {
+    color: #172033;
+    font-weight: 750;
+}
+
+.result-header-card {
+    background: white;
+    border: 1px solid #e1e7ef;
+    border-radius: 16px;
+    padding: 22px 24px;
+    box-shadow: 0 4px 16px rgba(28,44,70,0.035);
+}
+
+.result-header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.result-tags {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.equipment-tag {
+    background: #fdeaea;
+    color: #d64545;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.equipment-tag-name {
+    color: #8b96a6;
+    font-size: 12.5px;
+    font-weight: 500;
+}
+
+.grounded-badge {
+    background: #eaf2ff;
+    color: #2463eb;
+    font-size: 11px;
+    font-weight: 650;
+    padding: 7px 12px;
+    border-radius: 20px;
+    border: 1px solid #d3e2fb;
+}
+
+.result-question {
+    color: #14202f;
+    font-size: 24px;
+    font-weight: 780;
+    letter-spacing: -0.5px;
+    margin: 16px 0 0;
+    line-height: 1.35;
+}
+
+
+/* Critical safety warning */
+
+.critical-warning {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    background: #fff4e0;
+    border: 1px solid #f3c97a;
+    border-left: 4px solid #e29200;
+    border-radius: 14px;
+    padding: 16px 18px;
+}
+
+.critical-warning-icon {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 9px;
+    background: #e29200;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+}
+
+.critical-warning-title {
+    color: #8a4e00;
+    font-size: 14px;
+    font-weight: 750;
+    margin-bottom: 4px;
+}
+
+.critical-warning-message {
+    color: #92621c;
+    font-size: 12.5px;
+    line-height: 1.6;
+}
+
+
+/* Diagnostic card */
+
+.diagnostic-card {
+    background: white;
+    border: 1px solid #e1e7ef;
+    border-radius: 16px;
+    padding: 22px 24px 8px;
+    box-shadow: 0 4px 16px rgba(28,44,70,0.035);
+}
+
+.diagnostic-header {
+    color: #17283f;
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.diagnostic-divider {
+    height: 1px;
+    background: #edf0f4;
+    margin: 16px 0 18px;
+}
+
+.diagnostic-section-label {
+    color: #8792a2;
+    font-size: 10.5px;
+    font-weight: 750;
+    letter-spacing: 1.2px;
+    margin-bottom: 12px;
+}
+
+.actions-label {
+    margin-top: 24px;
+}
+
+.causes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 6px;
+}
+
+.cause-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #f8fafc;
+    border: 1px solid #edf0f4;
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.cause-icon {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.cause-icon-red {
+    background: #fdecec;
+}
+
+.cause-icon-orange {
+    background: #fef3e0;
+}
+
+.cause-title {
+    color: #26364b;
+    font-size: 12.5px;
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.cause-description {
+    color: #8b96a6;
+    font-size: 11.5px;
+    line-height: 1.55;
+}
+
+
+/* Recommended actions */
+
+.action-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    background: #eef4ff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+}
+
+.action-number {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    border-radius: 50%;
+    background: #2463eb;
+    color: white;
+    font-size: 11px;
+    font-weight: 750;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-text {
+    color: #223350;
+    font-size: 12.5px;
+    line-height: 1.6;
+}
+
+.action-source {
+    color: #2463eb;
+    font-size: 10.5px;
+    font-weight: 600;
+    margin-top: 6px;
+}
+
+
+/* Footer bar */
+
+.result-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 2px;
+}
+
+.result-footer-left {
+    color: #8b96a6;
+    font-size: 11.5px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   NEW QUERY — TROUBLESHOOT ISSUE FORM
+========================================================= */
+
+.nq-page-header {
+    margin-bottom: 22px;
+}
+
+.nq-page-header h1 {
+    color: #14202f;
+    font-size: 27px;
+    font-weight: 780;
+    letter-spacing: -0.6px;
+    margin: 0;
+}
+
+.nq-page-header p {
+    color: #8b96a6;
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+.query-form-card {
+    background: linear-gradient(160deg, #f9fbff 0%, #eef3fb 100%);
+    border: 1px solid #e1e7ef;
+    border-radius: 16px;
+    padding: 26px 26px 22px;
+    max-width: 780px;
+    box-shadow: 0 4px 16px rgba(28,44,70,0.035);
+}
+
+.field-label {
+    color: #26364b;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 9px;
+}
+
+.required-mark {
+    color: #d64545;
+    font-weight: 700;
+}
+
+.optional-mark {
+    color: #9aa4b2;
+    font-weight: 500;
+    font-size: 11.5px;
+}
+
+.form-gap {
+    height: 16px;
+}
+
+/* Asset preview card (below the real selectbox) */
+
+.asset-preview {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    background: white;
+    border: 1px solid #dde3ec;
+    border-radius: 12px;
+    padding: 12px 15px;
+    margin-top: 8px;
+}
+
+.asset-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 10px;
+    background: #eaf1ff;
+    color: #2463eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.asset-name {
+    color: #172033;
+    font-size: 13.5px;
+    font-weight: 700;
+}
+
+.asset-tags {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 5px;
+}
+
+.asset-code-tag {
+    background: #eef4ff;
+    color: #2463eb;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+}
+
+.asset-status-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+}
+
+.asset-status-warning {
+    background: #fff4e0;
+    color: #a15c00;
+}
+
+.asset-status-ok {
+    background: #e8f8ef;
+    color: #16844f;
+}
+
+.asset-status-error {
+    background: #fff0f0;
+    color: #d44343;
+}
+
+/* Style the real Streamlit selectbox to blend with the card */
+div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
+    border-radius: 10px !important;
+    border-color: #dde3ec !important;
+    background: white !important;
+}
+
+/* Ask MaintAI primary button */
+
+.query-form-card + div .stButton button[kind="primary"],
+.stButton button[kind="primary"] {
+    background: #2463eb !important;
+    color: white !important;
+    border: none !important;
+    min-height: 46px !important;
+    font-size: 14px !important;
+}
+
+.stButton button[kind="primary"]:hover {
+    background: #1d53c9 !important;
+    color: white !important;
+    box-shadow: 0 7px 20px rgba(36,99,235,0.25);
 }
 
 
