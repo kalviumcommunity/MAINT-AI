@@ -9,10 +9,9 @@ from sqlalchemy import (
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 
-from app.database import Base
+from utils.database import db
 
-
-class Document(Base):
+class Document(db.Model):
     __tablename__ = "documents"
 
     document_id = Column(Integer, primary_key=True, index=True)

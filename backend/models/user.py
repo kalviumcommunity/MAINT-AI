@@ -7,10 +7,9 @@ from sqlalchemy import (
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 
-from app.database import Base
+from utils.database import db
 
-
-class User(Base):
+class User(db.Model):
     __tablename__ = "users"
 
     user_id = Column(
