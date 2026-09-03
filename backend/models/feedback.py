@@ -1,10 +1,10 @@
 from sqlalchemy import Column, Integer, Text, DateTime, ForeignKey, CheckConstraint
 from sqlalchemy.sql import func
 
-from backend.utils.database import Base
+from utils.database import db
 
 
-class Feedback(Base):
+class Feedback(db.Model):
     __tablename__ = "feedback"
 
     feedback_id = Column(Integer, primary_key=True, index=True)
@@ -22,5 +22,8 @@ class Feedback(Base):
     created_at = Column(DateTime, server_default=func.current_timestamp())
 
     __table_args__ = (
-        CheckConstraint("rating >= 1 AND rating <= 5", name="rating_range"),
+        CheckConstraint(
+            "rating >= 1 AND rating <= 5",
+            name="rating_range"
+        ),
     )
