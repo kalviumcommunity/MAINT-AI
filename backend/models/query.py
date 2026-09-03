@@ -1,10 +1,10 @@
 from sqlalchemy import Column, Integer, Text, DateTime, ForeignKey
 from sqlalchemy.sql import func
 
-from backend.utils.database import Base
+from utils.database import db
 
 
-class Query(Base):
+class Query(db.Model):
     __tablename__ = "queries"
 
     query_id = Column(Integer, primary_key=True, index=True)
