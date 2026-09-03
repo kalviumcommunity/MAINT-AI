@@ -1,4 +1,5 @@
 import streamlit as st
+from datetime import datetime
 
 from components.sidebar import render_sidebar
 from components.header import render_header
@@ -178,17 +179,7 @@ def new_query():
             else:
                 data = result["data"]
 
-                if "query_history" not in st.session_state:
-                    st.session_state["query_history"] = []
-
-                st.session_state["query_history"].insert(0, {
-                    "equipment": f"{asset['code']} · {asset['name']}",
-                    "category": asset["category"],
-                    "text": description,
-                    "priority": "Medium",
-                })
-
-                st.session_state["last_result"] = {
+                result_payload = {
                     "equipment_id": asset["code"],
                     "equipment_name": asset["name"],
                     "question": description,
@@ -202,5 +193,20 @@ def new_query():
                     "sources_used": len(data.get("sources", [])),
                 }
 
+                if "query_history" not in st.session_state:
+                    st.session_state["query_history"] = []
+
+                st.session_state["query_history"].insert(0, {
+                    "equipment_code": asset["code"],
+                    "equipment_name": asset["name"],
+                    "category": asset["category"],
+                    "text": description,
+                    "priority": "Medium",
+                    "status": "Resolved",
+                    "timestamp": datetime.now().strftime("%b %d, %Y · %I:%M %p"),
+                    "result": result_payload,
+                })
+
+                st.session_state["last_result"] = result_payload
                 st.session_state["page"] = "results"
                 st.rerun()
