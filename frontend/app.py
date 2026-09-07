@@ -5,6 +5,8 @@ from pages.dashboard import dashboard
 from pages.new_query import new_query
 from pages.results import results
 from pages.history import history
+from pages.sources import sources
+from pages.document_viewer import document_viewer
 
 
 st.set_page_config(
@@ -30,5 +32,9 @@ elif page == "results":
     results()
 elif page == "history":
     history()
+elif page == "sources":
+    sources()
+elif page == "document_viewer":
+    document_viewer()
 else:
     dashboard()

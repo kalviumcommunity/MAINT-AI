@@ -6,8 +6,6 @@ from utils.helpers import render_html
 from services.api import submit_query
 
 
-# Fallback sample data so this page still looks complete even if
-# no real result exists yet (e.g. visited directly during dev).
 SAMPLE_RESULT = {
     "equipment_id": "M-204",
     "equipment_name": "Conveyor Drive Motor",
@@ -98,11 +96,7 @@ def results():
 
     grounded_badge = ""
     if data.get("grounded"):
-        grounded_badge = """
-        <div class="grounded-badge">
-            🛡 Grounded in approved maintenance documentation
-        </div>
-        """
+        grounded_badge = '<div class="grounded-badge">🛡 Grounded in approved maintenance documentation</div>'
 
     render_html(f"""
 <div class="result-header-card">
@@ -137,17 +131,10 @@ def results():
 
     causes_section = ""
     if causes_html:
-        causes_section = f"""
-    <div class="diagnostic-section-label">POSSIBLE CAUSES</div>
-    {causes_html}
-"""
+        causes_section = f'<div class="diagnostic-section-label">POSSIBLE CAUSES</div>{causes_html}'
     elif data.get("diagnosis"):
-        causes_section = f"""
-    <div class="diagnostic-section-label">DIAGNOSIS</div>
-    <p style="color:#35476b; font-size:12.5px; line-height:1.7; margin: 0 0 6px;">
-        {data['diagnosis']}
-    </p>
-"""
+        causes_section = f"""<div class="diagnostic-section-label">DIAGNOSIS</div>
+<p style="color:#35476b; font-size:12.5px; line-height:1.7; margin: 0 0 6px;">{data['diagnosis']}</p>"""
 
     render_html(f"""
 <div class="diagnostic-card">
@@ -163,7 +150,6 @@ def results():
 
     render_html("<div class='small-gap'></div>")
 
-    # ---- Footer action bar ----
     render_html(f"""
 <div class="result-footer">
     <div class="result-footer-left">
@@ -188,9 +174,8 @@ def results():
         escalate = st.button("Escalate", key="res_escalate", use_container_width=True, type="primary")
 
     if view_sources:
-        with st.expander("Sources used in this diagnosis", expanded=True):
-            for action in data.get("actions", []):
-                st.markdown(f"- {action['source']}")
+        st.session_state["page"] = "sources"
+        st.rerun()
 
     if copy_clicked:
         full_text = data["question"] + "\n\n"
@@ -214,12 +199,6 @@ def results():
             result = submit_query(equipment_id, category, query_text, priority)
 
         if result["success"]:
-            resp = result["data"]
-            st.session_state["last_result"] = {
-                **data,
-                "causes": data.get("causes", []),
-                "question": query_text,
-            }
             st.toast("Response regenerated.")
             st.rerun()
         else:
