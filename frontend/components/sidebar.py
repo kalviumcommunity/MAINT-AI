@@ -19,10 +19,10 @@ def render_sidebar():
 
         current_page = st.session_state.get("page", "dashboard")
 
-        # The Results page is reached via New Query, so it should
-        # keep "New Query" highlighted in the sidebar rather than
-        # having no active item at all.
-        highlight_page = "new_query" if current_page == "results" else current_page
+        # Results, Sources, and Document Viewer are all reached via
+        # the New Query flow, so they keep "New Query" highlighted.
+        new_query_family = {"results", "sources", "document_viewer"}
+        highlight_page = "new_query" if current_page in new_query_family else current_page
 
         nav_items = [
             ("dashboard", "▦", "Dashboard"),
