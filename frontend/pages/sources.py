@@ -122,6 +122,7 @@ def sources():
             btn_type = "primary" if accent == "red" else "secondary"
             if st.button(source["button_label"], key=f"src_btn_{i}", use_container_width=True):
                 st.session_state["current_document"] = source["title"]
+                st.session_state["doc_viewer_return_to"] = "sources"
                 st.session_state["page"] = "document_viewer"
                 st.rerun()
 

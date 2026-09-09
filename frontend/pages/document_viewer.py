@@ -10,13 +10,15 @@ def document_viewer():
     render_sidebar()
 
     doc_title = st.session_state.get("current_document", "Motor Maintenance Manual v4.2")
+    return_to = st.session_state.get("doc_viewer_return_to", "sources")
+    back_label = "← Back to Sources" if return_to == "sources" else "← Back to Documents"
 
-    render_header(crumbs=["Dashboard", "New Query", "Sources", "Document"])
+    render_header(crumbs=["Dashboard", "New Query", "Sources", "Document"] if return_to == "sources" else ["Dashboard", "Documents", "Document"])
 
     top_col, _ = st.columns([1, 5])
     with top_col:
-        if st.button("← Back to Sources", key="doc_back"):
-            st.session_state["page"] = "sources"
+        if st.button(back_label, key="doc_back"):
+            st.session_state["page"] = return_to
             st.rerun()
 
     render_html(f"""
