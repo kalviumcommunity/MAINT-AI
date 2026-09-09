@@ -2,9 +2,21 @@
    MaintAI - Professional Dashboard
 ========================================================= */
 
+:root {
+    --page-bg: #f6f8fc;
+    --card-bg: #ffffff;
+    --card-border: #e1e7ef;
+    --divider: #edf0f4;
+    --text-heading: #172033;
+    --text-muted: #8b96a6;
+    --text-body: #182230;
+    --form-card-start: #f9fbff;
+    --form-card-end: #eef3fb;
+}
+
 .stApp {
-    background: #f6f8fc;
-    color: #182230;
+    background: var(--page-bg);
+    color: var(--text-body);
 }
 
 .block-container {
@@ -179,12 +191,12 @@ section[data-testid="stSidebar"] .stButton button:hover {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #e5eaf1;
+    border-bottom: 1px solid var(--divider);
     margin-bottom: 38px;
 }
 
 .breadcrumb {
-    color: #8a95a6;
+    color: var(--text-muted);
     font-size: 13px;
 }
 
@@ -194,7 +206,7 @@ section[data-testid="stSidebar"] .stButton button:hover {
 }
 
 .breadcrumb strong {
-    color: #344054;
+    color: var(--text-heading);
 }
 
 .user-profile {
@@ -207,8 +219,8 @@ section[data-testid="stSidebar"] .stButton button:hover {
     width: 38px;
     height: 38px;
     border-radius: 10px;
-    border: 1px solid #e2e7ef;
-    background: white;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -227,13 +239,13 @@ section[data-testid="stSidebar"] .stButton button:hover {
 }
 
 .user-name {
-    color: #172033;
+    color: var(--text-heading);
     font-size: 13px;
     font-weight: 700;
 }
 
 .user-role {
-    color: #8c97a7;
+    color: var(--text-muted);
     font-size: 10px;
     margin-top: 3px;
 }
@@ -261,7 +273,7 @@ section[data-testid="stSidebar"] .stButton button:hover {
 }
 
 .hero-section h1 {
-    color: #162235 !important;
+    color: var(--text-heading) !important;
     font-size: 42px !important;
     font-weight: 780 !important;
     letter-spacing: -1.5px;
@@ -269,7 +281,7 @@ section[data-testid="stSidebar"] .stButton button:hover {
 }
 
 .hero-section p {
-    color: #718096;
+    color: var(--text-muted);
     font-size: 14px;
     margin-top: 10px;
     line-height: 1.6;
@@ -284,8 +296,8 @@ section[data-testid="stSidebar"] .stButton button:hover {
     min-height: 43px;
     border-radius: 10px !important;
     border: 1px solid #d8e0eb !important;
-    background: white !important;
-    color: #23436d !important;
+    background: var(--card-bg) !important;
+    color: var(--text-heading) !important;
     font-size: 13px !important;
     font-weight: 650 !important;
     transition: 0.2s ease;
@@ -304,8 +316,8 @@ section[data-testid="stSidebar"] .stButton button:hover {
 ========================================================= */
 
 .metric-card {
-    background: white;
-    border: 1px solid #e1e7ef;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 16px;
     padding: 21px;
     min-height: 142px;
@@ -326,7 +338,7 @@ section[data-testid="stSidebar"] .stButton button:hover {
 }
 
 .metric-title {
-    color: #8792a2;
+    color: var(--text-muted);
     font-size: 10px;
     font-weight: 750;
     letter-spacing: 1px;
@@ -345,7 +357,7 @@ section[data-testid="stSidebar"] .stButton button:hover {
 }
 
 .metric-value {
-    color: #172338;
+    color: var(--text-heading);
     font-size: 31px;
     font-weight: 760;
     margin-top: 17px;
@@ -353,7 +365,7 @@ section[data-testid="stSidebar"] .stButton button:hover {
 }
 
 .metric-description {
-    color: #929dac;
+    color: var(--text-muted);
     font-size: 11px;
     margin-top: 6px;
 }
@@ -392,13 +404,13 @@ section[data-testid="stSidebar"] .stButton button:hover {
 }
 
 .section-header h2 {
-    color: #17283f;
+    color: var(--text-heading);
     font-size: 21px;
     margin: 0;
 }
 
 .section-header p {
-    color: #8b96a6;
+    color: var(--text-muted);
     font-size: 12px;
     margin: 4px 0 0;
 }
@@ -421,8 +433,8 @@ section[data-testid="stSidebar"] .stButton button:hover {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: white;
-    border: 1px solid #e2e7ef;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 13px;
     padding: 15px 17px;
     margin-bottom: 9px;
@@ -468,13 +480,13 @@ section[data-testid="stSidebar"] .stButton button:hover {
 }
 
 .query-title {
-    color: #26364b;
+    color: var(--text-heading);
     font-size: 13px;
     font-weight: 650;
 }
 
 .query-meta {
-    color: #929dac;
+    color: var(--text-muted);
     font-size: 10px;
     margin-top: 4px;
 }
@@ -566,21 +578,21 @@ section[data-testid="stSidebar"] .stButton button:hover {
 ========================================================= */
 
 .equipment-section {
-    background: white;
-    border: 1px solid #e1e7ef;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 5px 18px rgba(25,45,75,0.035);
 }
 
 .equipment-section-header h2 {
-    color: #17283f;
+    color: var(--text-heading);
     font-size: 18px;
     margin: 0;
 }
 
 .equipment-section-header p {
-    color: #8b96a6;
+    color: var(--text-muted);
     font-size: 11px;
     margin: 4px 0 12px;
 }
@@ -590,7 +602,7 @@ section[data-testid="stSidebar"] .stButton button:hover {
     align-items: center;
     gap: 11px;
     padding: 14px 0;
-    border-bottom: 1px solid #edf0f4;
+    border-bottom: 1px solid var(--divider);
 }
 
 .equipment-item:last-child {
@@ -620,7 +632,7 @@ section[data-testid="stSidebar"] .stButton button:hover {
 
 .equipment-information span {
     display: block;
-    color: #929dac;
+    color: var(--text-muted);
     font-size: 10px;
     margin-top: 3px;
 }
@@ -636,15 +648,15 @@ section[data-testid="stSidebar"] .stButton button:hover {
 ========================================================= */
 
 .form-card {
-    background: white;
-    border: 1px solid #e1e7ef;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 16px;
     padding: 24px;
     box-shadow: 0 4px 16px rgba(28,44,70,0.035);
 }
 
 .form-card-title {
-    color: #17283f;
+    color: var(--text-heading);
     font-size: 17px;
     font-weight: 750;
     margin-bottom: 18px;
@@ -695,7 +707,7 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 ========================================================= */
 
 .result-card {
-    background: white;
+    background: var(--card-bg);
     border: 1px solid #d6ecdd;
     border-left: 4px solid #1fbf6e;
     border-radius: 14px;
@@ -725,13 +737,13 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 }
 
 .result-title {
-    color: #17283f;
+    color: var(--text-heading);
     font-size: 14px;
     font-weight: 750;
 }
 
 .result-subtitle {
-    color: #8b96a6;
+    color: var(--text-muted);
     font-size: 11.5px;
     margin-top: 2px;
 }
@@ -749,11 +761,11 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 }
 
 .result-label {
-    color: #8b96a6;
+    color: var(--text-muted);
 }
 
 .result-value {
-    color: #26364b;
+    color: var(--text-heading);
     font-weight: 650;
 }
 
@@ -826,15 +838,15 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 ========================================================= */
 
 .tips-card {
-    background: white;
-    border: 1px solid #e1e7ef;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 5px 18px rgba(25,45,75,0.035);
 }
 
 .tips-title {
-    color: #17283f;
+    color: var(--text-heading);
     font-size: 14px;
     font-weight: 750;
     margin-bottom: 12px;
@@ -850,7 +862,7 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 
 .mini-history-item {
     padding: 10px 0;
-    border-bottom: 1px solid #edf0f4;
+    border-bottom: 1px solid var(--divider);
 }
 
 .mini-history-item:last-child {
@@ -864,7 +876,7 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 }
 
 .mini-history-meta {
-    color: #929dac;
+    color: var(--text-muted);
     font-size: 10px;
     margin-top: 3px;
 }
@@ -875,7 +887,7 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 ========================================================= */
 
 .crumb-root {
-    color: #8a95a6;
+    color: var(--text-muted);
 }
 
 .crumb-link {
@@ -883,13 +895,13 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 }
 
 .crumb-current {
-    color: #172033;
+    color: var(--text-heading);
     font-weight: 750;
 }
 
 .result-header-card {
-    background: white;
-    border: 1px solid #e1e7ef;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 16px;
     padding: 22px 24px;
     box-shadow: 0 4px 16px rgba(28,44,70,0.035);
@@ -919,7 +931,7 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 }
 
 .equipment-tag-name {
-    color: #8b96a6;
+    color: var(--text-muted);
     font-size: 12.5px;
     font-weight: 500;
 }
@@ -935,7 +947,7 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 }
 
 .result-question {
-    color: #14202f;
+    color: var(--text-heading);
     font-size: 24px;
     font-weight: 780;
     letter-spacing: -0.5px;
@@ -987,27 +999,27 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 /* Diagnostic card */
 
 .diagnostic-card {
-    background: white;
-    border: 1px solid #e1e7ef;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 16px;
     padding: 22px 24px 8px;
     box-shadow: 0 4px 16px rgba(28,44,70,0.035);
 }
 
 .diagnostic-header {
-    color: #17283f;
+    color: var(--text-heading);
     font-size: 15px;
     font-weight: 750;
 }
 
 .diagnostic-divider {
     height: 1px;
-    background: #edf0f4;
+    background: var(--divider);
     margin: 16px 0 18px;
 }
 
 .diagnostic-section-label {
-    color: #8792a2;
+    color: var(--text-muted);
     font-size: 10.5px;
     font-weight: 750;
     letter-spacing: 1.2px;
@@ -1055,14 +1067,14 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 }
 
 .cause-title {
-    color: #26364b;
+    color: var(--text-heading);
     font-size: 12.5px;
     font-weight: 700;
     margin-bottom: 3px;
 }
 
 .cause-description {
-    color: #8b96a6;
+    color: var(--text-muted);
     font-size: 11.5px;
     line-height: 1.55;
 }
@@ -1095,7 +1107,7 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 }
 
 .action-text {
-    color: #223350;
+    color: var(--text-heading);
     font-size: 12.5px;
     line-height: 1.6;
 }
@@ -1118,7 +1130,7 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 }
 
 .result-footer-left {
-    color: #8b96a6;
+    color: var(--text-muted);
     font-size: 11.5px;
     font-weight: 600;
 }
@@ -1133,7 +1145,7 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 }
 
 .nq-page-header h1 {
-    color: #14202f;
+    color: var(--text-heading);
     font-size: 27px;
     font-weight: 780;
     letter-spacing: -0.6px;
@@ -1141,14 +1153,14 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 }
 
 .nq-page-header p {
-    color: #8b96a6;
+    color: var(--text-muted);
     font-size: 13px;
     margin-top: 6px;
 }
 
 .query-form-card {
-    background: linear-gradient(160deg, #f9fbff 0%, #eef3fb 100%);
-    border: 1px solid #e1e7ef;
+    background: linear-gradient(160deg, var(--form-card-start) 0%, var(--form-card-end) 100%);
+    border: 1px solid var(--card-border);
     border-radius: 16px;
     padding: 26px 26px 22px;
     max-width: 780px;
@@ -1156,7 +1168,7 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 }
 
 .field-label {
-    color: #26364b;
+    color: var(--text-heading);
     font-size: 13px;
     font-weight: 700;
     margin-bottom: 9px;
@@ -1168,7 +1180,7 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 }
 
 .optional-mark {
-    color: #9aa4b2;
+    color: var(--text-muted);
     font-weight: 500;
     font-size: 11.5px;
 }
@@ -1183,7 +1195,7 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
     display: flex;
     align-items: center;
     gap: 13px;
-    background: white;
+    background: var(--card-bg);
     border: 1px solid #dde3ec;
     border-radius: 12px;
     padding: 12px 15px;
@@ -1204,7 +1216,7 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 }
 
 .asset-name {
-    color: #172033;
+    color: var(--text-heading);
     font-size: 13.5px;
     font-weight: 700;
 }
@@ -1251,7 +1263,7 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within {
 div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
     border-radius: 10px !important;
     border-color: #dde3ec !important;
-    background: white !important;
+    background: var(--card-bg) !important;
 }
 
 /* Ask MaintAI primary button */
@@ -1277,21 +1289,21 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
 ========================================================= */
 
 .history-filters-card {
-    background: white;
-    border: 1px solid #e1e7ef;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 14px;
     padding: 14px 16px;
     box-shadow: 0 4px 16px rgba(28,44,70,0.035);
 }
 
 .history-count {
-    color: #8b96a6;
+    color: var(--text-muted);
     font-size: 11.5px;
     font-weight: 600;
 }
 
 .history-empty-state {
-    background: white;
+    background: var(--card-bg);
     border: 1px dashed #d8e0eb;
     border-radius: 16px;
     padding: 50px 30px;
@@ -1304,14 +1316,14 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
 }
 
 .history-empty-title {
-    color: #26364b;
+    color: var(--text-heading);
     font-size: 15px;
     font-weight: 700;
     margin-bottom: 6px;
 }
 
 .history-empty-message {
-    color: #929dac;
+    color: var(--text-muted);
     font-size: 12.5px;
     max-width: 360px;
     margin: 0 auto;
@@ -1337,8 +1349,8 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
 }
 
 .source-card {
-    background: white;
-    border: 1px solid #e1e7ef;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 14px;
     padding: 18px 20px;
     box-shadow: 0 4px 16px rgba(28,44,70,0.035);
@@ -1390,7 +1402,7 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
 }
 
 .source-title {
-    color: #17283f;
+    color: var(--text-heading);
     font-size: 15px;
     font-weight: 750;
     margin-bottom: 10px;
@@ -1421,7 +1433,7 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
 }
 
 .plain-tag {
-    color: #8b96a6;
+    color: var(--text-muted);
     font-size: 11.5px;
     font-weight: 500;
 }
@@ -1436,19 +1448,19 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
     display: flex;
     justify-content: space-between;
     padding-top: 12px;
-    border-top: 1px solid #edf0f4;
+    border-top: 1px solid var(--divider);
     margin-bottom: 14px;
 }
 
 .source-meta-label {
-    color: #9aa4b2;
+    color: var(--text-muted);
     font-size: 10px;
     font-weight: 600;
     margin-bottom: 4px;
 }
 
 .source-meta-value {
-    color: #26364b;
+    color: var(--text-heading);
     font-size: 12px;
     font-weight: 650;
 }
@@ -1474,8 +1486,8 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
     display: flex;
     align-items: center;
     gap: 14px;
-    background: white;
-    border: 1px solid #e1e7ef;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 14px;
     padding: 16px 18px;
     box-shadow: 0 4px 16px rgba(28,44,70,0.035);
@@ -1494,34 +1506,34 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
 }
 
 .doc-viewer-title {
-    color: #17283f;
+    color: var(--text-heading);
     font-size: 15px;
     font-weight: 750;
 }
 
 .doc-viewer-meta {
-    color: #8b96a6;
+    color: var(--text-muted);
     font-size: 11px;
     margin-top: 3px;
 }
 
 .doc-thumb-rail {
-    background: white;
-    border: 1px solid #e1e7ef;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 14px;
     padding: 14px;
     box-shadow: 0 4px 16px rgba(28,44,70,0.035);
 }
 
 .doc-thumb-rail-title {
-    color: #26364b;
+    color: var(--text-heading);
     font-size: 12px;
     font-weight: 700;
     margin-bottom: 12px;
 }
 
 .doc-thumb-count {
-    color: #9aa4b2;
+    color: var(--text-muted);
     font-size: 10.5px;
     font-weight: 500;
 }
@@ -1576,16 +1588,141 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
 }
 
 .doc-viewer-placeholder-title {
-    color: #26364b;
+    color: var(--text-heading);
     font-size: 14px;
     font-weight: 700;
     margin-bottom: 8px;
 }
 
 .doc-viewer-placeholder-text {
-    color: #9aa4b2;
+    color: var(--text-muted);
     font-size: 12px;
     max-width: 340px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   FEEDBACK PAGE
+========================================================= */
+
+.feedback-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 13px;
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 16px rgba(28,44,70,0.035);
+}
+
+.feedback-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.feedback-type-tag {
+    background: #eef4ff;
+    color: #2463eb;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.feedback-rating {
+    font-size: 13px;
+}
+
+.feedback-message {
+    color: var(--text-heading);
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.feedback-meta {
+    color: var(--text-muted);
+    font-size: 10.5px;
+}
+
+
+/* =========================================================
+   SETTINGS PAGE
+========================================================= */
+
+.settings-card {
+    margin-bottom: 4px;
+}
+
+.settings-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.settings-avatar {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 50%;
+    background: #2463eb;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 750;
+}
+
+.settings-card-title {
+    color: var(--text-heading);
+    font-size: 16px;
+    font-weight: 750;
+}
+
+.settings-card-subtitle {
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.settings-toggle-label {
+    padding: 6px 0 14px;
+}
+
+.settings-toggle-title {
+    color: var(--text-heading);
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.settings-toggle-desc {
+    color: var(--text-muted);
+    font-size: 11.5px;
+    margin-top: 2px;
+}
+
+.settings-danger-card {
+    background: #fff9f9;
+    border: 1px solid #f5c2c2;
+    border-left: 4px solid #d64545;
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+}
+
+.settings-danger-title {
+    color: #b4302f;
+    font-size: 13.5px;
+    font-weight: 750;
+    margin-bottom: 6px;
+}
+
+.settings-danger-message {
+    color: #a35555;
+    font-size: 11.5px;
     line-height: 1.6;
 }
 
@@ -1599,7 +1736,7 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
     padding-top: 18px;
     border-top: 1px solid #e3e8ef;
     text-align: center;
-    color: #9aa4b2;
+    color: var(--text-muted);
     font-size: 10px;
 }
 
