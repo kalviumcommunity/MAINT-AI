@@ -1,33 +1,35 @@
-from flask import Blueprint, request, jsonify
+from sqlalchemy.orm import Session
 
 from models.query import Query
 
-history_router = Blueprint(
-    "history_router",
-    __name__,
-    url_prefix="/api/history"
-)
 
+# --------------------------------------------------
+# GET QUERY HISTORY
+# --------------------------------------------------
 
-@history_router.route("/", methods=["GET"])
-def get_history():
-    user_id = request.args.get("user_id")
+def get_history(user_id, db: Session):
+    """
+    Get troubleshooting query history for a user.
+    """
 
-    if not user_id:
-        return jsonify({
+    # Validate user_id
+    if user_id is None:
+        return {
             "message": "user_id is required"
-        }), 400
+        }, 400
 
     try:
         user_id = int(user_id)
-    except (ValueError, TypeError):
-        return jsonify({
-            "message": "user_id must be an integer"
-        }), 400
 
+    except (ValueError, TypeError):
+        return {
+            "message": "user_id must be an integer"
+        }, 400
+
+    # Get queries
     queries = (
-        Query.query
-        .filter_by(user_id=user_id)
+        db.query(Query)
+        .filter(Query.user_id == user_id)
         .order_by(Query.created_at.desc())
         .all()
     )
@@ -41,12 +43,15 @@ def get_history():
             "issue_id": query.issue_id,
             "query_text": query.query_text,
             "ai_response": query.ai_response,
-            "created_at": query.created_at.isoformat()
-            if query.created_at else None
+            "created_at": (
+                query.created_at.isoformat()
+                if query.created_at
+                else None
+            )
         })
 
-    return jsonify({
+    return {
         "message": "Query history retrieved successfully",
         "count": len(history),
         "history": history
-    }), 200
+    }, 200

@@ -1,16 +1,19 @@
-from flask import jsonify
+from sqlalchemy.orm import Session
 
 from models.feedback import Feedback
-from utils.database import db
 
 
-def create_feedback(data):
+# --------------------------------------------------
+# CREATE FEEDBACK
+# --------------------------------------------------
+
+def create_feedback(data, db: Session):
     """Create feedback for a troubleshooting query."""
 
     if not data:
-        return jsonify({
+        return {
             "message": "Request body is required"
-        }), 400
+        }, 400
 
     query_id = data.get("query_id")
     user_id = data.get("user_id")
@@ -19,16 +22,17 @@ def create_feedback(data):
 
     # Validate query_id
     if query_id is None:
-        return jsonify({
+        return {
             "message": "query_id is required"
-        }), 400
+        }, 400
 
     # Validate rating
     if rating is None:
-        return jsonify({
+        return {
             "message": "rating is required"
-        }), 400
+        }, 400
 
+    # Convert values to integers
     try:
         query_id = int(query_id)
         rating = int(rating)
@@ -37,44 +41,5 @@ def create_feedback(data):
             user_id = int(user_id)
 
     except (ValueError, TypeError):
-        return jsonify({
-            "message": "query_id, user_id and rating must be integers"
-        }), 400
-
-    # Rating must be 1-5
-    if rating < 1 or rating > 5:
-        return jsonify({
-            "message": "rating must be between 1 and 5"
-        }), 400
-
-    # Create feedback
-    feedback = Feedback(
-        query_id=query_id,
-        user_id=user_id,
-        rating=rating,
-        comments=comments
-    )
-
-    try:
-        db.session.add(feedback)
-        db.session.commit()
-
-        return jsonify({
-            "message": "Feedback submitted successfully",
-            "feedback": {
-                "feedback_id": feedback.feedback_id,
-                "query_id": feedback.query_id,
-                "user_id": feedback.user_id,
-                "rating": feedback.rating,
-                "comments": feedback.comments,
-                "created_at": feedback.created_at
-            }
-        }), 201
-
-    except Exception as e:
-        db.session.rollback()
-
-        return jsonify({
-            "message": "Failed to submit feedback",
-            "error": str(e)
-        }), 500
+        return {
+            "
