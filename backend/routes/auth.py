@@ -1,24 +1,36 @@
-from flask import Blueprint, request
+from sqlalchemy.orm import Session
 
-from controllers.auth_controller import register_user, login_user
-
-
-auth_router = Blueprint(
-    "auth_router",
-    __name__,
-    url_prefix="/api/auth"
+from controllers.auth_controller import (
+    register_user,
+    login_user
 )
 
 
-@auth_router.route("/register", methods=["POST"])
-def register():
-    data = request.get_json()
+# --------------------------------------------------
+# REGISTER
+# --------------------------------------------------
 
-    return register_user(data)
+def register(data, db: Session):
+    """
+    Register a new user.
+    """
+
+    return register_user(
+        data,
+        db
+    )
 
 
-@auth_router.route("/login", methods=["POST"])
-def login():
-    data = request.get_json()
+# --------------------------------------------------
+# LOGIN
+# --------------------------------------------------
 
-    return login_user(data)
+def login(data, db: Session):
+    """
+    Authenticate an existing user.
+    """
+
+    return login_user(
+        data,
+        db
+    )

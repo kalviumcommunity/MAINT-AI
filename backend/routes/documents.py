@@ -1,72 +1,78 @@
-from flask import Blueprint, request
+from sqlalchemy.orm import Session
 
 from controllers.document_controller import (
     upload_document,
     get_all_documents,
     get_document,
-    delete_document,
-    update_processing_status
-)
-
-documents_router = Blueprint(
-    "documents_router",
-    __name__,
-    url_prefix="/api/documents"
+    delete_document
 )
 
 
-# Upload PDF
-@documents_router.route("/", methods=["POST"])
-def upload():
-    file = request.files.get("file")
-    data = request.form
+# --------------------------------------------------
+# UPLOAD DOCUMENT
+# --------------------------------------------------
 
-    user_id = request.form.get("user_id")
+def upload(
+    file,
+    equipment_id,
+    user_id,
+    db: Session
+):
+    """
+    Upload a PDF document.
+    """
 
-    if user_id is not None:
-        try:
-            user_id = int(user_id)
-        except ValueError:
-            return {
-                "message": "user_id must be an integer"
-            }, 400
-
-    return upload_document(file, data, user_id)
-
-
-# Get all documents
-@documents_router.route("/", methods=["GET"])
-def get_documents():
-    return get_all_documents()
+    return upload_document(
+        file=file,
+        equipment_id=equipment_id,
+        user_id=user_id,
+        db=db
+    )
 
 
-# Get document by ID
-@documents_router.route("/<int:document_id>", methods=["GET"])
-def get_single_document(document_id):
-    return get_document(document_id)
+# --------------------------------------------------
+# GET ALL DOCUMENTS
+# --------------------------------------------------
+
+def get_documents(db: Session):
+    """
+    Get all uploaded documents.
+    """
+
+    return get_all_documents(db)
 
 
-# Delete document
-@documents_router.route("/<int:document_id>", methods=["DELETE"])
-def delete_single_document(document_id):
-    return delete_document(document_id)
+# --------------------------------------------------
+# GET DOCUMENT BY ID
+# --------------------------------------------------
 
+def get_single_document(
+    document_id,
+    db: Session
+):
+    """
+    Get a document by ID.
+    """
 
-# Update processing status
-@documents_router.route("/<int:document_id>/status", methods=["PATCH"])
-def update_status(document_id):
-    data = request.get_json()
-
-    if not data:
-        return {
-            "message": "Request body is required"
-        }, 400
-
-    status = data.get("status")
-    chunk_count = data.get("chunk_count")
-
-    return update_processing_status(
+    return get_document(
         document_id,
-        status,
-        chunk_count
+        db
+    )
+
+
+# --------------------------------------------------
+# DELETE DOCUMENT
+# --------------------------------------------------
+
+def delete_single_document(
+    document_id,
+    db: Session
+):
+    """
+    Delete a document.
+    """
+
+    return delete_document(
+        document_id,
+        db
     )

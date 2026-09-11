@@ -1,24 +1,27 @@
-from flask import jsonify
-from flask_bcrypt import Bcrypt
+from datetime import datetime, timedelta, timezone
+
 import jwt
-from datetime import datetime, timedelta
+from passlib.context import CryptContext
+from sqlalchemy.orm import Session
 
 from models.user import User
-from utils.database import db
 
 
-bcrypt = Bcrypt()
-
-
-# Secret key
 SECRET_KEY = "maint-ai-secret-key"
+ALGORITHM = "HS256"
+
+pwd_context = CryptContext(
+    schemes=["bcrypt"],
+    deprecated="auto"
+)
 
 
 # --------------------------------------------------
 # REGISTER
 # --------------------------------------------------
 
-def register_user(data):
+def register_user(data, db: Session):
+
     name = data.get("name")
     email = data.get("email")
     password = data.get("password")
@@ -26,24 +29,24 @@ def register_user(data):
 
     # Validate required fields
     if not name or not email or not password:
-        return jsonify({
+        return {
             "message": "Name, email and password are required"
-        }), 400
+        }, 400
 
     # Check existing user
-    existing_user = User.query.filter_by(
-        email=email
-    ).first()
+    existing_user = (
+        db.query(User)
+        .filter(User.email == email)
+        .first()
+    )
 
     if existing_user:
-        return jsonify({
+        return {
             "message": "Email already registered"
-        }), 409
+        }, 409
 
     # Hash password
-    password_hash = bcrypt.generate_password_hash(
-        password
-    ).decode("utf-8")
+    password_hash = pwd_context.hash(password)
 
     # Create user
     user = User(
@@ -53,10 +56,11 @@ def register_user(data):
         role=role
     )
 
-    db.session.add(user)
-    db.session.commit()
+    db.add(user)
+    db.commit()
+    db.refresh(user)
 
-    return jsonify({
+    return {
         "message": "User registered successfully",
         "user": {
             "user_id": user.user_id,
@@ -64,59 +68,61 @@ def register_user(data):
             "email": user.email,
             "role": user.role
         }
-    }), 201
+    }, 201
 
 
 # --------------------------------------------------
 # LOGIN
 # --------------------------------------------------
 
-def login_user(data):
+def login_user(data, db: Session):
 
     email = data.get("email")
     password = data.get("password")
 
     if not email or not password:
-        return jsonify({
+        return {
             "message": "Email and password are required"
-        }), 400
+        }, 400
 
     # Find user
-    user = User.query.filter_by(
-        email=email
-    ).first()
+    user = (
+        db.query(User)
+        .filter(User.email == email)
+        .first()
+    )
 
     if not user:
-        return jsonify({
+        return {
             "message": "Invalid email or password"
-        }), 401
+        }, 401
 
     # Verify password
-    password_valid = bcrypt.check_password_hash(
-        user.password_hash,
-        password
+    password_valid = pwd_context.verify(
+        password,
+        user.password_hash
     )
 
     if not password_valid:
-        return jsonify({
+        return {
             "message": "Invalid email or password"
-        }), 401
+        }, 401
 
     # JWT payload
     payload = {
         "user_id": user.user_id,
         "email": user.email,
         "role": user.role,
-        "exp": datetime.utcnow() + timedelta(hours=1)
+        "exp": datetime.now(timezone.utc) + timedelta(hours=1)
     }
 
     token = jwt.encode(
         payload,
         SECRET_KEY,
-        algorithm="HS256"
+        algorithm=ALGORITHM
     )
 
-    return jsonify({
+    return {
         "message": "Login successful",
         "access_token": token,
         "token_type": "Bearer",
@@ -126,4 +132,4 @@ def login_user(data):
             "email": user.email,
             "role": user.role
         }
-    }), 200
+    }, 200
