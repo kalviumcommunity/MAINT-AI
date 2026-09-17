@@ -1,168 +1,202 @@
 # MAINT-AI
 
-## AI-Powered Maintenance Intelligence
+## AI-Powered Maintenance Intelligence using RAG
 
-MAINT-AI is an AI-powered, source-referenced maintenance troubleshooting assistant designed to help manufacturing technicians quickly find reliable information from approved maintenance documentation.
+MAINT-AI is an AI-powered, source-referenced maintenance troubleshooting assistant designed to help **manufacturing technicians and maintenance engineers** quickly find reliable information from approved maintenance documentation.
 
-> **Important:** MAINT-AI is a decision-support system. It assists technicians but does not directly control machinery or perform maintenance actions.
+Instead of manually searching through equipment manuals, maintenance logs, troubleshooting guides, and safety procedures, technicians can enter an equipment problem, error code, or symptom and receive relevant troubleshooting guidance.
+
+MAINT-AI uses **Retrieval-Augmented Generation (RAG)** to retrieve relevant maintenance information from approved documents and provides the retrieved context to an LLM to generate a grounded troubleshooting response with source references and relevant safety information.
+
+> **MAINT-AI is a decision-support system. It assists technicians but does not directly control machinery or perform maintenance actions.**
 
 ---
 
-## 1. Problem Statement
+# Problem Statement
 
-Manufacturing firms maintain equipment manuals, maintenance logs, troubleshooting guides, and safety procedures, but floor technicians may not be able to quickly access the relevant information during machine failures.
+Manufacturing organizations maintain large amounts of technical information such as:
 
-The required information is often spread across lengthy documents and different records. Technicians have to manually search through these sources to identify possible causes, find troubleshooting steps, and verify safety procedures.
+- Equipment manuals
+- Maintenance logs
+- Troubleshooting guides
+- Safety procedures
+- Technical documentation
+
+However, this information is often distributed across lengthy documents and different records.
+
+During a machine failure, technicians may need to manually search through several documents to:
+
+- Identify possible causes.
+- Find troubleshooting steps.
+- Check equipment-specific information.
+- Verify safety procedures.
 
 This increases troubleshooting time, machine downtime, and operational costs.
 
-MAINT-AI addresses this problem by retrieving relevant maintenance information and generating useful troubleshooting guidance based on approved documentation.
+MAINT-AI solves this problem by providing a centralized AI-powered interface that retrieves relevant maintenance information and presents source-grounded troubleshooting guidance.
 
 ---
 
-## 2. Product Vision
+# Solution
 
-To help manufacturing technicians quickly find reliable maintenance information and troubleshoot equipment problems using AI-powered, source-grounded assistance.
+MAINT-AI allows technicians to:
 
----
+1. Log in to the application.
+2. Access the maintenance dashboard.
+3. Select or enter equipment information.
+4. Enter an error code or describe the machine problem.
+5. Submit the troubleshooting query.
+6. Retrieve relevant information from approved maintenance documents.
+7. Generate an AI-assisted troubleshooting response.
+8. View possible causes and recommended troubleshooting steps.
+9. View relevant safety information.
+10. Verify the response using source references.
+11. Review previous troubleshooting queries.
 
-## 3. Target Users
-
-### Primary Users
-
-* Floor Technicians
-* Maintenance Engineers
-
-### Secondary Users
-
-* Maintenance Managers
-* Maintenance Supervisors
-
-### Administrative Users
-
-* Authorized users responsible for maintaining the documentation and knowledge base
+The system is designed to provide assistance based on the organization's approved maintenance knowledge base rather than relying only on general LLM knowledge.
 
 ---
 
-## 4. Business Value
-
-MAINT-AI aims to:
-
-* Reduce the time technicians spend searching through manuals and maintenance documents.
-* Provide faster access to relevant troubleshooting information.
-* Provide source-referenced AI responses.
-* Make maintenance documentation easier to access.
-* Provide relevant safety information during troubleshooting.
-* Maintain a searchable history of previous troubleshooting queries.
-* Help technicians make faster and more informed maintenance decisions.
-
----
-
-## 5. Objectives
-
-* Centralize equipment-related maintenance documentation.
-* Allow technicians to submit equipment problems and error codes.
-* Retrieve relevant information from approved maintenance documents.
-* Generate AI-assisted troubleshooting recommendations.
-* Provide source references for AI-generated responses.
-* Display relevant safety instructions.
-* Allow users to view previous troubleshooting queries.
-* Allow authorized users to upload and manage maintenance documents.
-* Provide a simple dashboard for accessing the system.
-
----
-
-## 6. Product Scope
-
-### 6.1 In Scope
-
-* User login
-* Technician dashboard
-* Equipment/problem query submission
-* AI-powered troubleshooting
-* RAG-based document retrieval
-* Equipment manuals and maintenance documents
-* Source references
-* Safety instructions
-* Query history
-* Document upload and management
-* Basic system settings
-* Feedback on AI responses
-
-### 6.2 Out of Scope for the Initial Version
-
-* Real-time IoT/sensor integration
-* Predictive maintenance
-* Automatic machine control
-* PLC/SCADA integration
-* Automatic repair execution
-* Spare-parts ordering
-* Advanced enterprise analytics
-* LLM fine-tuning
-* Voice-based interaction
-
-> These may be considered as future enhancements.
-
----
-
-## 7. Core User Flow
+# How MAINT-AI Works
 
 ```text
-Login
-  ↓
-Dashboard
-  ↓
-New Query
-  ↓
-Enter Equipment + Problem/Error Code
-  ↓
-MAINT-AI retrieves relevant documentation
-  ↓
-LLM generates troubleshooting response
-  ↓
-Troubleshooting Result
-  ↓
-View Sources / Safety Information
-  ↓
-Technician verifies and acts according to approved procedures
+                         Technician
+                              |
+                              v
+                           Login
+                              |
+                              v
+                      Streamlit Frontend
+                              |
+                              v
+                         New Query
+                              |
+                              v
+                       Flask Backend
+                              |
+                              v
+                      Query Processing
+                              |
+                              v
+                    BGE-M3 Query Embedding
+                              |
+                              v
+                PostgreSQL + pgvector Search
+                              |
+                              v
+                 Relevant Document Chunks
+                              |
+                              v
+                         LangChain
+                              |
+                              v
+                         OpenAI API
+                              |
+                              v
+                Troubleshooting Response
+                              |
+             +----------------+----------------+
+             |                |                |
+             v                v                v
+        Possible Causes   Troubleshooting   Safety
+                              Steps          Information
+             |
+             v
+                     Source References
+````
+
+---
+
+# RAG Pipeline
+
+MAINT-AI uses **Retrieval-Augmented Generation (RAG)** to ground AI-generated troubleshooting guidance in approved maintenance documentation.
+
+## Document Processing
+
+```text
+Maintenance Document
+        ↓
+     PyMuPDF
+        ↓
+   Text Extraction
+        ↓
+    Text Chunking
+        ↓
+      BGE-M3
+        ↓
+ Generate Embeddings
+        ↓
+PostgreSQL + pgvector
+```
+
+The document ingestion process includes:
+
+* Maintenance document upload
+* PDF text extraction
+* Text splitting
+* Chunk creation
+* Metadata association
+* BGE-M3 embedding generation
+* Vector storage in PostgreSQL using pgvector
+
+---
+
+## Question Answering
+
+```text
+Technician Query
+       ↓
+Equipment + Problem + Error Code
+       ↓
+BGE-M3 Query Embedding
+       ↓
+Vector Similarity Search
+       ↓
+Top-K Relevant Chunks
+       ↓
+Relevant Maintenance Context
+       ↓
+LangChain
+       ↓
+OpenAI API
+       ↓
+Structured Troubleshooting Response
+       ↓
+Sources + Safety Information
+```
+
+The retrieved documentation is provided to the LLM as context so that the generated response can be grounded in approved maintenance information.
+
+---
+
+# Grounded Troubleshooting
+
+MAINT-AI is designed to avoid acting as an unrestricted chatbot.
+
+The system should:
+
+* Use retrieved maintenance documentation whenever relevant information is available.
+* Provide supporting source references.
+* Use equipment context when available.
+* Communicate uncertainty when evidence is insufficient.
+* Avoid confidently inventing unsupported maintenance procedures.
+* Keep the final operational decision with authorized maintenance personnel.
+
+If sufficient information cannot be found, the system should clearly communicate that verified information is unavailable.
+
+Example:
+
+```text
+Insufficient verified information was found in the available
+maintenance documentation for this issue.
+Please verify the equipment manual or applicable maintenance procedure.
 ```
 
 ---
 
-## 8. Functional Requirements
+# Example
 
-### 8.1 Login
-
-The system shall allow authorized users to:
-
-* Log in using their credentials.
-* Access the MAINT-AI dashboard after successful login.
-* Log out of the system.
-
-### 8.2 Dashboard
-
-The dashboard shall provide:
-
-* Quick access to create a new troubleshooting query.
-* Recent troubleshooting queries.
-* Basic query statistics.
-* Number of available knowledge-base documents.
-* Recent activity.
-
-> The dashboard will focus on quick access to troubleshooting rather than advanced analytics.
-
-### 8.3 New Query
-
-Technicians shall be able to:
-
-* Select or enter equipment information.
-* Enter an equipment ID.
-* Enter an error code if available.
-* Describe the machine problem or symptoms.
-* Provide additional information when required.
-* Submit the query to MAINT-AI.
-
-**Example:**
+## Technician Query
 
 ```text
 Equipment: M-204
@@ -171,22 +205,7 @@ Problem:
 Motor is overheating after approximately 30 minutes of operation.
 ```
 
-### 8.4 AI Troubleshooting
-
-After receiving a query, MAINT-AI shall:
-
-* Understand the technician's problem.
-* Use the provided equipment context.
-* Retrieve relevant information from the knowledge base.
-* Provide the retrieved information as context to the LLM.
-* Generate possible causes.
-* Provide recommended troubleshooting steps.
-* Display relevant safety instructions.
-* Provide supporting source references.
-
-> The system should clearly indicate when sufficient information cannot be found.
-
-**Example response structure:**
+## MAINT-AI Response
 
 ```text
 Possible Causes:
@@ -203,313 +222,655 @@ Recommended Actions:
 
 Safety:
 
-Follow the applicable equipment safety and lockout/tagout procedure before inspection.
+Follow the applicable equipment safety and lockout/tagout
+procedure before inspection.
 
 Sources:
 
-Motor Maintenance Manual — Section 4.2 — Page 18
+Motor Maintenance Manual
+Section: 4.2
+Page: 18
 ```
 
 ---
 
-## 9. RAG Requirements
+# Source References
 
-MAINT-AI will use **Retrieval-Augmented Generation (RAG)** to provide the LLM with relevant maintenance information.
+MAINT-AI provides source information associated with retrieved maintenance content.
 
-### 9.1 Document Processing
+Source information may include:
+
+```text
+Document Name
+Document Type
+Section
+Page Number
+Equipment Association
+Chunk ID
+```
+
+Example:
+
+```text
+Source:
+Motor Maintenance Manual
+
+Section:
+4.2
+
+Page:
+18
+
+Equipment:
+M-204
+```
+
+The source-reference feature allows technicians to verify the information in the original documentation before taking action.
+
+---
+
+# Safety Information
+
+Safety is an important part of the MAINT-AI workflow.
 
 The system shall:
 
-* Accept maintenance documents.
-* Extract text from documents.
-* Split documents into smaller chunks.
-* Generate embeddings for document chunks.
-* Store the embeddings and document information in the database.
+* Display relevant safety instructions when available.
+* Use approved safety documentation as part of the knowledge base.
+* Show safety information alongside troubleshooting guidance.
+* Clearly indicate when safety information is unavailable.
+* Avoid presenting unsupported procedures as verified instructions.
 
-### 9.2 Retrieval
-
-When a technician submits a query:
-
-```text
-Technician Query
-      ↓
-Query Embedding
-      ↓
-Vector Similarity Search
-      ↓
-Relevant Document Chunks
-      ↓
-LLM Context
-```
-
-Relevant equipment/document metadata may be used to improve retrieval.
-
-### 9.3 Generation
-
-The LLM shall generate a response using:
-
-* Technician query
-* Equipment information
-* Retrieved documentation
-* Relevant maintenance context
-
-The generated response should contain:
-
-* Possible causes
-* Troubleshooting steps
-* Safety information where applicable
-* Source references
+> MAINT-AI does not make autonomous safety decisions and does not directly control equipment.
 
 ---
 
-## 10. Document Management
+# Authentication and Users
 
-Authorized users shall be able to:
+MAINT-AI is designed for authorized users with different responsibilities.
+
+## Primary Users
+
+* Floor Technicians
+* Maintenance Engineers
+
+## Secondary Users
+
+* Maintenance Managers
+* Maintenance Supervisors
+
+## Administrative Users
+
+Authorized users responsible for:
+
+* Maintenance documentation
+* Knowledge-base management
+* Document administration
+
+The application includes login functionality so authorized users can access the MAINT-AI system.
+
+---
+
+# Key Features
+
+* User login
+* Technician dashboard
+* Equipment selection
+* Equipment ID entry
+* Error code input
+* Problem and symptom description
+* AI-powered troubleshooting
+* RAG-based document retrieval
+* BGE-M3 embeddings
+* PostgreSQL + pgvector vector search
+* OpenAI API integration
+* Possible cause generation
+* Recommended troubleshooting steps
+* Safety information
+* Source references
+* Query history
+* Document upload
+* Document management
+* Document viewer
+* Feedback on AI responses
+* Basic system settings
+* Grounded-response handling
+* Insufficient-evidence handling
+
+---
+
+# Document Management
+
+Authorized users can manage maintenance documentation through the application.
+
+The document management workflow supports:
+
+```text
+Upload Document
+      ↓
+Document Processing
+      ↓
+Text Extraction
+      ↓
+Chunking
+      ↓
+Embedding Generation
+      ↓
+Vector Storage
+      ↓
+Knowledge Base
+```
+
+Users should be able to:
 
 * Upload maintenance documents.
 * View available documents.
 * View document details.
 * Categorize documents.
 * Associate documents with equipment.
-* Replace or remove outdated documents where required.
+* Replace outdated documents.
+* Remove outdated documents where required.
 * View document processing/indexing status.
 
-> Supported documents for the initial version will primarily be PDF-based technical documentation.
+The initial implementation primarily supports **PDF-based technical documentation**.
 
 ---
 
-## 11. Source References
+# Query History
 
-MAINT-AI shall provide the source of information used in the generated response.
+MAINT-AI maintains a history of previous troubleshooting queries.
 
-Source information may include:
-
-* Document name
-* Document type
-* Section
-* Page number
-* Equipment association
-
-> Users should be able to open the relevant source document from the troubleshooting result. This allows technicians to verify the information before taking action.
-
----
-
-## 12. Safety Requirements
-
-MAINT-AI shall:
-
-* Display relevant safety instructions when available.
-* Use approved safety documentation as part of the knowledge base.
-* Provide safety information alongside troubleshooting guidance.
-* Clearly communicate when supporting safety information is unavailable.
-* Avoid presenting unsupported maintenance procedures as verified instructions.
-
-> MAINT-AI will not make autonomous safety decisions or directly control equipment.
-
----
-
-## 13. Query History
-
-The system shall maintain a history of previous troubleshooting queries.
-
-Users shall be able to view:
-
-* Previous query
-* Equipment
-* Date/time
-* Response
-* Status
-
-> Users should be able to reopen a previous troubleshooting result and view its associated sources.
-
----
-
-## 14. Feedback
-
-Users shall be able to provide simple feedback on AI responses.
-
-The initial version will support:
-
-* Helpful / Not Helpful
-* Optional feedback comment
-
-> Feedback will be used to evaluate the usefulness of MAINT-AI responses.
-
----
-
-## 15. System Settings
-
-The initial settings screen will provide basic configuration options such as:
-
-* User/account information
-* System preferences
-* Knowledge-base configuration
-* AI configuration information
-
-> Sensitive API credentials must not be exposed in the frontend. Advanced administrative configuration is outside the initial implementation scope.
-
----
-
-## 16. AI Safety and Reliability
-
-> **MAINT-AI should not be treated as an unrestricted chatbot.**
-
-### Grounded Responses
-
-AI responses should be based on retrieved maintenance documentation whenever relevant information is available.
-
-### Source References
-
-Responses should provide supporting document references.
-
-### Insufficient Evidence
-
-If relevant information cannot be found, the system should clearly state that sufficient verified information is unavailable rather than confidently inventing a procedure.
-
-### Human Decision Making
-
-The technician or authorized maintenance personnel remain responsible for the final operational decision.
-
----
-
-## 17. LLM Requirements
-
-The LLM should receive relevant context along with the technician's problem.
-
-Relevant context may include:
-
-* Equipment ID
-* Equipment model
-* Error code
-* Symptoms
-* Operating conditions
-* Maintenance history
-* Retrieved maintenance documentation
-
-The LLM should:
-
-* Understand the reported problem.
-* Identify possible causes.
-* Generate useful troubleshooting steps.
-* Use the retrieved context.
-* Communicate uncertainty when evidence is insufficient.
-* Provide clear and actionable responses.
-
-> The exact OpenAI model will be finalized based on evaluation of response quality, context understanding, latency, cost, and suitability for the project.
-
----
-
-## 18. Technology Stack
-
-### AI / RAG
-
-| Component           | Technology               |
-| ------------------- | ------------------------ |
-| LLM                 | OpenAI API               |
-| Embeddings          | BAAI BGE-M3              |
-| RAG Framework       | LangChain                |
-| Vector Search       | pgvector                 |
-| Document Processing | PyMuPDF                  |
-| Text Chunking       | LangChain Text Splitters |
-
-### Application
-
-| Component            | Technology |
-| -------------------- | ---------- |
-| Programming Language | Python     |
-| Frontend             | Streamlit  |
-
-### Data
-
-| Component           | Technology |
-| ------------------- | ---------- |
-| Database            | PostgreSQL |
-| Database Management | pgAdmin    |
-
-### Development
-
-| Component       | Technology             |
-| --------------- | ---------------------- |
-| Version Control | Git + GitHub           |
-| Environment     | Python `venv` + `.env` |
-
----
-
-## 19. System Architecture
-
-### Document Ingestion Pipeline
+Users can view information such as:
 
 ```text
-Approved Maintenance Documents
-          ↓
-       PyMuPDF
-          ↓
-    Text Extraction
-          ↓
-     Text Chunking
-          ↓
-        BGE-M3
-          ↓
+Previous Query
+Equipment
+Date / Time
+Response
+Status
+```
+
+Users should also be able to reopen previous troubleshooting results and access their associated sources.
+
+---
+
+# Feedback
+
+Users can provide simple feedback on AI responses.
+
+The initial feedback system supports:
+
+* Helpful
+* Not Helpful
+* Optional feedback comment
+
+Feedback can be used to evaluate the usefulness and quality of MAINT-AI responses.
+
+---
+
+# Technology Stack
+
+## AI / RAG
+
+| Technology                   | Purpose                                       |
+| ---------------------------- | --------------------------------------------- |
+| **OpenAI API**               | LLM-based troubleshooting response generation |
+| **BAAI BGE-M3**              | Document and query embeddings                 |
+| **LangChain**                | RAG pipeline orchestration                    |
+| **pgvector**                 | Vector similarity search                      |
+| **PyMuPDF**                  | PDF text extraction                           |
+| **LangChain Text Splitters** | Document chunking                             |
+
+## Application
+
+| Technology    | Purpose                       |
+| ------------- | ----------------------------- |
+| **Python**    | Main programming language     |
+| **Streamlit** | Frontend application          |
+| **Flask**     | Backend API/application layer |
+
+## Database
+
+| Technology     | Purpose                              |
+| -------------- | ------------------------------------ |
+| **PostgreSQL** | Application and maintenance data     |
+| **pgvector**   | Vector storage and similarity search |
+| **pgAdmin**    | Database management                  |
+
+## Development
+
+| Technology      | Purpose                           |
+| --------------- | --------------------------------- |
+| **Git**         | Version control                   |
+| **GitHub**      | Repository and team collaboration |
+| **Python venv** | Virtual environment               |
+| **.env**        | Environment configuration         |
+
+---
+
+# Data Storage
+
+## Application Data
+
+PostgreSQL is used to store structured application and maintenance data.
+
+The database includes entities such as:
+
+```text
+Users
+Equipment
+Documents
+Document Chunks
+Issues
+Queries
+Feedback
+```
+
+---
+
+## Document Data
+
+Maintenance documents are associated with equipment and stored with relevant metadata.
+
+Example:
+
+```text
+Document
+ ├── Document ID
+ ├── Document Name
+ ├── Document Type
+ ├── Equipment
+ ├── Uploaded By
+ └── Upload Date
+```
+
+---
+
+## Document Chunks
+
+Document content is divided into smaller chunks for retrieval.
+
+Example:
+
+```text
+Document
+   ↓
+Chunk
+   ├── Chunk ID
+   ├── Document ID
+   ├── Chunk Text
+   ├── Page Number
+   └── Embedding
+```
+
+Embeddings are stored in PostgreSQL using the `pgvector` extension.
+
+---
+
+# Project Structure
+
+```text
+MAINT-AI/
+│
+├── backend/
+│   ├── app.py
+│   │
+│   ├── controllers/
+│   │   ├── auth_controller.py
+│   │   ├── document_controller.py
+│   │   ├── feedback_controller.py
+│   │   └── query_controller.py
+│   │
+│   ├── models/
+│   │   ├── user.py
+│   │   ├── equipment.py
+│   │   ├── document.py
+│   │   ├── document_chunk.py
+│   │   ├── issue.py
+│   │   ├── query.py
+│   │   └── feedback.py
+│   │
+│   ├── routes/
+│   │   ├── auth.py
+│   │   ├── documents.py
+│   │   ├── feedback.py
+│   │   ├── query.py
+│   │   └── history.py
+│   │
+│   ├── services/
+│   │   └── query_service.py
+│   │
+│   ├── rag/
+│   │   ├── embeddings.py
+│   │   ├── retriever.py
+│   │   └── rag_pipeline.py
+│   │
+│   └── utils/
+│       ├── database.py
+│       └── config.py
+│
+├── frontend/
+│   ├── app.py
+│   │
+│   ├── pages/
+│   │   ├── dashboard.py
+│   │   ├── new_query.py
+│   │   ├── results.py
+│   │   ├── history.py
+│   │   ├── sources.py
+│   │   ├── document_viewer.py
+│   │   ├── documents.py
+│   │   ├── feedback.py
+│   │   └── settings.py
+│   │
+│   ├── components/
+│   ├── services/
+│   │   └── api.py
+│   ├── utils/
+│   └── styles/
+│
+├── .env
+├── .gitignore
+├── requirements.txt
+└── README.md
+```
+
+---
+
+# Backend Architecture
+
+The backend is implemented using Flask.
+
+The Flask application provides modules for:
+
+* Authentication
+* Query processing
+* Document management
+* Feedback
+* History
+* Database integration
+* RAG integration
+
+The backend architecture follows:
+
+```text
+Streamlit Frontend
+        ↓
+Flask Backend
+        ↓
+Routes / Controllers
+        ↓
+Services
+        ↓
+RAG Pipeline
+        ↓
 PostgreSQL + pgvector
 ```
 
-### Query and Generation Pipeline
+---
+
+# API Modules
+
+The Flask backend provides functionality for:
+
+## Authentication
+
+Handles:
+
+* User authentication
+* Login
+* Logout
+* User access
+
+## Query
+
+Handles:
+
+* Maintenance troubleshooting queries
+* Equipment context
+* Problem descriptions
+* Error codes
+* RAG retrieval
+* Troubleshooting response generation
+
+## Documents
+
+Handles:
+
+* Document upload
+* Document management
+* Document metadata
+* Knowledge-base documents
+
+## Feedback
+
+Handles:
+
+* Helpful / Not Helpful feedback
+* User comments
+
+---
+
+# Frontend and Backend Integration
+
+The main application flow is:
 
 ```text
-Technician Query
-       ↓
-     BGE-M3
-       ↓
-Similarity Search
-       ↓
-Relevant Document Chunks
-       ↓
-    LangChain
-       ↓
-   OpenAI API
-       ↓
+Technician
+    ↓
+Streamlit New Query
+    ↓
+Frontend Service
+    ↓
+Flask Backend
+    ↓
+Query Processing
+    ↓
+RAG Pipeline
+    ↓
+PostgreSQL + pgvector
+    ↓
+Retrieved Context
+    ↓
+LLM
+    ↓
 Troubleshooting Response
-       ↓
-Sources + Safety Information
+    ↓
+Streamlit Results
+```
+
+The frontend is responsible for collecting technician input and presenting the response.
+
+The backend is responsible for query processing, retrieval, database interaction, and AI/RAG processing.
+
+---
+
+# Setup
+
+## 1. Clone the Repository
+
+```bash
+git clone <repository-url>
+cd MAINT-AI
 ```
 
 ---
 
-## 20. Mock UX
+## 2. Create a Virtual Environment
 
-The initial MAINT-AI interface will contain the following screens:
+```bash
+python -m venv .venv
+```
 
-* Login
-* Dashboard
-* New Query
-* Troubleshooting Results
-* Source References
-* Document Viewer
-* Query History
-* Document Management
-* System Settings
+---
 
-### Primary User Flow
+## 3. Activate the Virtual Environment
+
+### Windows
+
+```bash
+.venv\Scripts\activate
+```
+
+### macOS / Linux
+
+```bash
+source .venv/bin/activate
+```
+
+---
+
+## 4. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 5. Configure Environment Variables
+
+Create a `.env` file in the project root.
+
+Example:
+
+```env
+DATABASE_URL=your_postgresql_connection_string
+OPENAI_API_KEY=your_openai_api_key
+```
+
+> Never commit `.env` or API credentials to GitHub.
+
+---
+
+# Database Setup
+
+MAINT-AI uses:
+
+```text
+PostgreSQL
+   +
+pgvector
+```
+
+The database stores application data and document embeddings.
+
+The `pgvector` extension must be enabled in PostgreSQL.
+
+The system uses vector similarity search to retrieve relevant document chunks for technician queries.
+
+---
+
+# Running the Application
+
+## Start Flask Backend
+
+From the project root:
+
+```bash
+python backend/app.py
+```
+
+The Flask development server runs locally according to the configuration in `backend/app.py`.
+
+---
+
+## Start Streamlit Frontend
+
+Open another terminal:
+
+```bash
+streamlit run frontend/app.py
+```
+
+The Streamlit application will then be available locally.
+
+---
+
+# User Flow
 
 ```text
 Login
-  ↓
+   ↓
 Dashboard
-  ↓
+   ↓
 New Query
-  ↓
-Troubleshooting Results
-  ↓
-Sources / Document Viewer
+   ↓
+Select Equipment
+   ↓
+Enter Error Code / Symptoms
+   ↓
+Describe Maintenance Problem
+   ↓
+Submit Query
+   ↓
+RAG Retrieval
+   ↓
+Relevant Document Chunks
+   ↓
+LLM Response
+   ↓
+Troubleshooting Result
+   ↓
+Sources + Safety Information
+   ↓
+Verify Against Approved Documentation
 ```
 
 ---
 
-## 21. Success Metrics
+# Example User Flow
 
-The initial project will evaluate MAINT-AI using simulated maintenance scenarios.
+```text
+Technician
+    ↓
+Select Equipment: M-204
+    ↓
+Enter Problem:
+Motor is overheating after 30 minutes
+    ↓
+Submit Query
+    ↓
+Retrieve Relevant Maintenance Chunks
+    ↓
+Generate Troubleshooting Guidance
+    ↓
+Display:
+    - Possible Causes
+    - Recommended Actions
+    - Safety
+    - Sources
+```
 
-### Proposed Targets
+---
+
+# AI Safety and Reliability
+
+MAINT-AI follows several principles to improve reliability.
+
+## Grounded Responses
+
+Responses should use relevant retrieved maintenance documentation whenever available.
+
+## Source References
+
+Generated responses should provide supporting document references.
+
+## Insufficient Evidence
+
+When relevant information cannot be found, the system should clearly communicate that verified information is unavailable.
+
+## Human Decision Making
+
+Technicians and authorized maintenance personnel remain responsible for the final operational decision.
+
+---
+
+# Evaluation
+
+MAINT-AI will initially be evaluated using simulated maintenance scenarios.
+
+## Proposed Success Metrics
 
 | Metric                                      | Target |
 | ------------------------------------------- | -----: |
@@ -518,23 +879,69 @@ The initial project will evaluate MAINT-AI using simulated maintenance scenarios
 | Source-referenced responses                 |  ≥ 95% |
 | Positive user feedback                      |  ≥ 80% |
 
-Technical evaluation will also consider:
+---
+
+# Technical Evaluation
+
+The RAG and AI pipeline will also be evaluated using:
 
 * Retrieval relevance
 * Response relevance
 * Source-reference correctness
 * Response faithfulness
 * Response latency
-
-> Real-world machine downtime reduction cannot be directly validated within the college simulation and would require deployment in an actual manufacturing environment.
+* Ability to communicate insufficient evidence
 
 ---
 
-## 22. Research Basis
+# Example Evaluation Scenario
 
-The architecture of MAINT-AI is based on research in dense retrieval, embeddings, Retrieval-Augmented Generation, and LLM-based industrial fault diagnosis.
+| Maintenance Query      | Expected Information             |
+| ---------------------- | -------------------------------- |
+| Motor overheating      | Motor maintenance documentation  |
+| Cooling system problem | Cooling-system procedure         |
+| High vibration         | Equipment troubleshooting guide  |
+| Lubrication issue      | Maintenance manual               |
+| Unknown error code     | Relevant equipment documentation |
 
-### RAG Research
+---
+
+# Scope
+
+## In Scope
+
+* User login
+* Technician dashboard
+* Equipment/problem query submission
+* AI-powered troubleshooting
+* RAG-based document retrieval
+* Maintenance documentation
+* Source references
+* Safety information
+* Query history
+* Document upload and management
+* Basic system settings
+* Feedback on AI responses
+
+## Out of Scope
+
+* Real-time IoT/sensor integration
+* Predictive maintenance
+* Automatic machine control
+* PLC/SCADA integration
+* Automatic repair execution
+* Spare-parts ordering
+* Advanced enterprise analytics
+* LLM fine-tuning
+* Voice-based interaction
+
+---
+
+# Research Basis
+
+MAINT-AI is based on research in:
+
+## RAG
 
 * Dense semantic retrieval
 * Query and document embeddings
@@ -546,26 +953,34 @@ The architecture of MAINT-AI is based on research in dense retrieval, embeddings
 * Retrieval quality
 * Dense vs keyword retrieval
 
-### LLM Research
+## LLM-based Fault Diagnosis
 
-* LLMs for industrial machine fault diagnosis
-* Structured fault diagnosis
-* Importance of equipment context
-* LLM model selection
-* Accuracy and evaluation
+* Industrial machine fault diagnosis
+* Structured troubleshooting
+* Equipment context
+* Model selection
+* Accuracy evaluation
 * Generalization
 * Adaptability
 * Latency and cost
 
-The combined research supports the following principle:
+The core principle is:
 
-> **Retrieve relevant evidence first, then use the LLM to interpret the evidence and generate a structured troubleshooting response.**
+```text
+RETRIEVE
+    ↓
+UNDERSTAND
+    ↓
+RECOMMEND
+    ↓
+VERIFY
+```
 
 ---
 
-## 23. Future Enhancements
+# Future Enhancements
 
-Future versions may include:
+Future versions of MAINT-AI may include:
 
 * Hybrid semantic + keyword retrieval
 * Retrieval reranking
@@ -575,23 +990,216 @@ Future versions may include:
 * Predictive maintenance
 * Voice-based interaction
 * Multilingual support
-* Integration with existing enterprise maintenance systems
+* Integration with enterprise maintenance systems
 * Advanced maintenance analytics
 
 ---
 
-## 24. Conclusion
+# Mock UI/UX
 
-**MAINT-AI** is an AI-powered maintenance decision-support system designed to help manufacturing technicians troubleshoot equipment failures faster.
+The initial MAINT-AI interface includes the following screens:
 
-The system combines maintenance documentation, semantic retrieval, RAG, and an LLM to provide source-grounded troubleshooting guidance.
+```text
+Login
+   ↓
+Dashboard
+   ↓
+New Query
+   ↓
+Troubleshooting Results
+   ↓
+Source References
+   ↓
+Document Viewer
+```
 
-Instead of relying only on the LLM's general knowledge, MAINT-AI retrieves relevant organizational documentation and provides it as context for generating the response.
+Additional screens include:
 
-### Core Workflow
+* Query History
+* Document Management
+* System Settings
+* Feedback
+
+The interface is designed to provide a simple workflow for technicians who need to troubleshoot equipment quickly.
+
+---
+
+# Team Responsibilities
+
+## Ajay Dharshan — Product / Documentation / Integration
+
+* Product Requirements Document
+* Product requirements
+* Project documentation
+* Mock UI/UX design
+* System workflow definition
+* Streamlit frontend integration
+* Frontend-backend integration testing
+* Application integration and debugging
+
+## Vijayashree — AI / UI/UX
+
+* LLM research
+* Model evaluation
+* UI/UX research and design
+* Figma design
+
+## Amulya — RAG / Database
+
+* RAG research
+* Retrieval architecture
+* Embedding research
+* Vector-search research
+* PostgreSQL and pgvector
+* RAG pipeline implementation
+* Technical mockup
+
+> Team members collaborate on implementation, testing, integration, and final presentation.
+
+---
+
+# Development Roadmap
+
+## Phase 1 — Foundation
+
+* GitHub repository setup
+* Python environment
+* Environment variables
+* PostgreSQL setup
+* pgvector setup
+* Streamlit setup
+* Flask setup
+
+## Phase 2 — Database and Models
+
+* User model
+* Equipment model
+* Document model
+* Document chunk model
+* Issue model
+* Query model
+* Feedback model
+* Database connection
+
+## Phase 3 — Document Processing
+
+* PDF processing
+* Text extraction
+* Text chunking
+* Metadata handling
+* Embedding generation
+* Vector storage
+
+## Phase 4 — RAG Pipeline
+
+* Query embedding
+* Vector similarity search
+* Top-K retrieval
+* Context construction
+* LangChain integration
+* OpenAI integration
+* Source references
+* Safety context
+
+## Phase 5 — Application Integration
+
+* Streamlit dashboard
+* New Query interface
+* Results interface
+* Source display
+* Document management
+* Query history
+* Feedback
+* Frontend-backend integration
+
+## Phase 6 — Testing and Delivery
+
+* End-to-end testing
+* RAG evaluation
+* Source-reference testing
+* Error handling
+* Documentation
+* README completion
+* Demo preparation
+* Final presentation
+
+---
+
+# Project Status
+
+**Under Development**
+
+MAINT-AI is being developed as an AI-powered maintenance decision-support application using:
+
+```text
+Python
++
+Streamlit
++
+Flask
++
+PostgreSQL
++
+pgvector
++
+BGE-M3
++
+LangChain
++
+OpenAI API
+```
+
+---
+
+# Success Criteria
+
+The MAINT-AI initial version will be considered successful when:
+
+* Users can log in.
+* Technicians can create maintenance queries.
+* Equipment information can be submitted.
+* Error codes and symptoms can be entered.
+* Maintenance documents can be processed.
+* Document chunks can be embedded.
+* Embeddings can be stored in PostgreSQL with pgvector.
+* Relevant document chunks can be retrieved.
+* Retrieved context can be provided to the LLM.
+* Troubleshooting responses can be generated.
+* Responses provide source references.
+* Relevant safety information can be displayed.
+* The system can communicate when sufficient evidence is unavailable.
+* Previous queries can be accessed.
+* Users can provide feedback.
+* The complete frontend and backend workflow can be demonstrated.
+
+---
+
+# Conclusion
+
+**MAINT-AI** is an AI-powered maintenance intelligence system designed to help manufacturing technicians troubleshoot equipment problems faster.
+
+The system combines:
+
+* Maintenance documentation
+* Semantic retrieval
+* BGE-M3 embeddings
+* PostgreSQL + pgvector
+* LangChain
+* OpenAI API
+* Streamlit
+* Flask
+
+to provide source-grounded troubleshooting assistance.
+
+Instead of relying only on general-purpose AI knowledge, MAINT-AI retrieves relevant organizational maintenance documentation and uses that information as context for generating the response.
+
+The core workflow is:
 
 ```text
 RETRIEVE → UNDERSTAND → RECOMMEND → VERIFY
 ```
 
-MAINT-AI assists technicians by providing relevant information, troubleshooting guidance, safety instructions, and source references while keeping the final operational decision with authorized maintenance personnel.
+MAINT-AI provides technicians with relevant maintenance information, possible causes, troubleshooting steps, safety information, and source references while keeping the final operational decision with authorized maintenance personnel.
+
+````
+
