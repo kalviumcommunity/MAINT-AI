@@ -690,7 +690,7 @@ The backend is responsible for query processing, retrieval, database interaction
 ## 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/kalviumcommunity/MAINT-AI.git
 cd MAINT-AI
 ```
 
