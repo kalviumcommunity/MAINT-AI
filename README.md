@@ -1023,41 +1023,6 @@ Additional screens include:
 The interface is designed to provide a simple workflow for technicians who need to troubleshoot equipment quickly.
 
 ---
-
-# Team Responsibilities
-
-## Ajay Dharshan — Product / Documentation / Integration
-
-* Product Requirements Document
-* Product requirements
-* Project documentation
-* Mock UI/UX design
-* System workflow definition
-* Streamlit frontend integration
-* Frontend-backend integration testing
-* Application integration and debugging
-
-## Vijayashree — AI / UI/UX
-
-* LLM research
-* Model evaluation
-* UI/UX research and design
-* Figma design
-
-## Amulya — RAG / Database
-
-* RAG research
-* Retrieval architecture
-* Embedding research
-* Vector-search research
-* PostgreSQL and pgvector
-* RAG pipeline implementation
-* Technical mockup
-
-> Team members collaborate on implementation, testing, integration, and final presentation.
-
----
-
 # Development Roadmap
 
 ## Phase 1 — Foundation
